@@ -36,3 +36,340 @@
     transform: rotate(360deg);
   }
 }
+
+/* src/styles.css */
+
+/* Reset some default styles */
+body, h1, ul, li, button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Style the header */
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5em;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 15px;
+}
+
+nav ul li button {
+  background-color: white;
+  color: #4CAF50;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+nav ul li button:hover {
+  background-color: #45a049;
+  color: white;
+}
+
+/* Style the main content */
+main {
+  padding: 20px;
+}
+
+main h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+/* Add a simple container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.course-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header styles */
+.course-page-container h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+/* List styles */
+.course-list {
+  list-style: none;
+  padding: 0;
+}
+
+.course-list li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e9e9e9;
+  border-radius: 4px;
+}
+
+.course-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.course-list li a:hover {
+  text-decoration: underline;
+}
+
+/* Button styles */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+/* Loading styles */
+.loading {
+  font-size: 1.2em;
+  color: #999;
+}
+
+.lectures-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header styles */
+.lectures-page-container h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+/* List styles */
+.lecture-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lecture-list li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e9e9e9;
+  border-radius: 4px;
+}
+
+.lecture-list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.lecture-list li a:hover {
+  text-decoration: underline;
+}
+
+.lecture-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header styles */
+.lecture-details-container h1,
+.lecture-details-container h2,
+.lecture-details-container h3 {
+  color: #4CAF50;
+}
+
+.lecture-details-container h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.lecture-details-container h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.lecture-details-container h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+/* Paragraph styles */
+.lecture-details-container p {
+  margin-bottom: 20px;
+}
+
+/* List styles */
+.student-list {
+  list-style: none;
+  padding: 0;
+}
+
+.student-list li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e9e9e9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.student-list li span {
+  flex-grow: 1;
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+.enroll-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.enroll-button:hover {
+  background-color: #45a049;
+}
+
+.course-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Form field styles */
+.course-form-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.course-form-container input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Submit button styles */
+.course-form-container button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.course-form-container button:hover {
+  background-color: #45a049;
+}
+
+/* Error message styles */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* src/LectureCreationForm.css */
+
+/* Form container styles */
+.lecture-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Form field styles */
+.lecture-form-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.lecture-form-container input[type="text"],
+.lecture-form-container input[type="date"],
+.lecture-form-container input[type="time"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Submit button styles */
+.lecture-form-container button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.lecture-form-container button:hover {
+  background-color: #45a049;
+}

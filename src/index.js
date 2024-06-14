@@ -1,17 +1,28 @@
+// src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import keycloak from './components/Keycloak';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+const eventLogger = (event, error) => {
+  if (event === 'onAuthSuccess' || event === 'onReady') {
+   // console.log('Keycloak is ready');
+  }
+};
+
+const tokenLogger = (tokens) => {
+  // console.log('onKeycloakTokens', tokens);
+};
+
+ReactDOM.render(
+  <ReactKeycloakProvider
+    authClient={keycloak}
+    initOptions={{ onLoad: 'login-required' }}
+    onEvent={eventLogger}
+    onTokens={tokenLogger}
+  >
     <App />
-  </React.StrictMode>
+  </ReactKeycloakProvider>,
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
