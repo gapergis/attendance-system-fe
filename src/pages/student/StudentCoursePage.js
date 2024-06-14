@@ -1,45 +1,49 @@
-// src/pages/CoursePage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCoursesForStudent } from '../../services/courseService';
 import { useAuth } from '../../services/authService';
-import {getUserDetailsByUsername} from '../../services/userService'
+import { getUserDetailsByUsername } from '../../services/userService';
 import { useKeycloak } from '@react-keycloak/web';
 import '../../App.css'; // Import the CSS file
 
 const CoursePage = () => {
-  const {keycloak} = useKeycloak();
+  const { keycloak } = useKeycloak();
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const { getToken } = useAuth();
   const token = getToken();
-  const username =  keycloak.tokenParsed.preferred_username;
+  const username = keycloak.tokenParsed.preferred_username;
 
-useEffect(() => {
-  const fetchStudent = async () => {
-    try {
-      const response = await getUserDetailsByUsername(username);
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const response = await getUserDetailsByUsername(username);
         setUser(response);
         setError(null);
-    } catch (error) {
-      setUser(null);
-      setError('An error occurred');
-    }
-  };  
+      } catch (error) {
+        setUser(null);
+        setError('An error occurred while fetching user details.');
+      } finally {
+        setLoadingUser(false);
+      }
+    };
     fetchStudent();
-  }, [username]);  
+  }, [username]);
 
   useEffect(() => {
     const fetchCourses = async () => {
+      if (!user) return;
       try {
+        setLoadingCourses(true);
         const coursesData = await getCoursesForStudent(token, user.userId);
         setCourses(coursesData);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching courses:', error);
-        setLoading(false);
+      } finally {
+        setLoadingCourses(false);
       }
     };
 
@@ -48,10 +52,14 @@ useEffect(() => {
 
   return (
     <div className="course-page-container">
-      {user ? (
+      {loadingUser ? (
+        <p>Loading user information...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
         <>
           <h1>Courses for student {user.username}</h1>
-          {loading ? (
+          {loadingCourses ? (
             <div className="loading">Loading courses...</div>
           ) : (
             <ul className="course-list">
@@ -65,13 +73,9 @@ useEffect(() => {
             </ul>
           )}
         </>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
-}  
+};
 
 export default CoursePage;

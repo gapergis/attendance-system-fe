@@ -10,40 +10,28 @@ const CoursePage = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [professorId, setProfessorId] = useState();
+  const [professorId, setProfessorId] = useState(null);
   const { getUserInfo, getToken } = useAuth();
   const token = getToken();
   
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
       try {
+        setLoading(true);
+        const professor = await getUserInfo();
+        const professorDetails = await getUserDetailsByUsername(professor.username);
+        setProfessorId(professorDetails.userId);
         const coursesData = await getCourses(token);
         setCourses(coursesData);
-        setLoading(false);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error fetching data:', error);
+      } finally {
         setLoading(false);
       }
     };
 
-    const fetchProfessorId = async () => {
-      try {
-        const professor = await getUserInfo();
-        console.log(professor)
-        const professorDetails = await getUserDetailsByUsername(professor.username);
-        setProfessorId(professorDetails.userId);  // Assuming professorDetails.userId is correct
-        console.log(professorDetails.userId);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching professor ID:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-    fetchProfessorId();
+    fetchData();
   }, [token]);
-
 
   const toggleForm = () => {
     setShowForm(prevShowForm => !prevShowForm);

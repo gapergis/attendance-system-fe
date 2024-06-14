@@ -41,11 +41,8 @@ const LectureDetailsPage = () => {
         }
         const course = await getCoursesById(getToken(), courseId);
         let professorId = course.professorId;
-        console.log(professorId);
         const professor = await getUserDetailsById(professorId);
         setProfessor(professor);
-        console.log(professor)
-
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -58,7 +55,6 @@ const LectureDetailsPage = () => {
 
   const handleStatusChange = async (attendance, newStatus) => {
     try {
-      console.log(attendance.attendance_id + " , " + newStatus)
       await updateAttendanceStatus(attendance.attendance_id, newStatus);
       setAttendance(prevAttendance => ({
         ...prevAttendance,

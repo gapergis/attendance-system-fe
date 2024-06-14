@@ -1,4 +1,3 @@
-// src/pages/CourseLecturesPage.js
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getLecturesByCourseId } from '../../services/lectureService';
@@ -40,7 +39,7 @@ const CourseLecturesPage = () => {
           <ul className="lecture-list">
             {lectures.map(lecture => (
               <li key={lecture.lecture_id}>
-                <Link courseId={courseId} to={`/professor/courses/lectures/lecture/${lecture.lecture_id}`}>
+                <Link to={`/professor/courses/lectures/lecture/${lecture.lecture_id}`}>
                   Date: {lecture.date}, Time: {lecture.time}, Topic: {lecture.topic}
                 </Link>
               </li>

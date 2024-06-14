@@ -57,9 +57,9 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
   if (!access) {
     if (allowedRoles.includes('professor') && isProfessor()){
-      return <Navigate to="/professor" />;
+      return <Navigate to="/professor/courses" />;
     } else {
-      return <Navigate to="/student" />;
+      return <Navigate to="/student/courses" />;
     }
     
   }

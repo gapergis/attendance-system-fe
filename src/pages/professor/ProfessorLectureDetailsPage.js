@@ -72,8 +72,6 @@ const LectureDetailsPage = () => {
         const emailContent = `Dear ${student?.surname},\n\n` +
           `Your attendance status confirmation for the lecture on ${lecture.date} at ${lecture.time} has been updated to ${newStatus} by the professor.\n\n` +
           `Best Regards\nThe Matrix`;
-        console.log(student)
-        console.log(typeof student.email)
         // Call sendEmail function with student's email and content
         await sendEmail(student?.email, 'Attendance Confirmation Status Update', emailContent);
         setEmailSending(false);

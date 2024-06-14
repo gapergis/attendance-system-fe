@@ -27,7 +27,6 @@ const CourseLecturesPage = () => {
 
     const fetchEnrollmentStatus = async () => {
       try {
-        console.log("check: " + courseId +","+ studentId);
         const enrollmentStatus = await checkUserEnrollment(courseId, studentId);
         setIsEnrolled(enrollmentStatus);
       } catch (error) {

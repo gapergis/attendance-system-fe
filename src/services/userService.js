@@ -16,7 +16,6 @@ export const getUserDetailsByUsername = async (username) => {
 export const getUserDetailsById = async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/users/byId/${userId}`);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error('Failed to update attendance status:', error);
@@ -35,9 +34,7 @@ export const updateAttendanceConfirmation = async (attendanceId, updatedAttendan
 
 export const updateAttendanceStatus = async (attendanceId, newStatus) => {
   try {
-    console.log(attendanceId + " , " + newStatus);
     const response = await axios.put(`${API_URL}/attendances/${attendanceId}/${newStatus}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Failed to update attendance status:', error);
@@ -48,7 +45,6 @@ export const updateAttendanceStatus = async (attendanceId, newStatus) => {
 export const checkUserEnrollment = async (courseId, studentId) => {
   try {
     const response = await axios.get(`${API_URL}/enrollments/check?courseId=${courseId}&userId=${studentId}`);
-    console.log('Enrollment check response:', response.data); // Debugging
     return response.data; // Assuming the API directly returns the boolean
   } catch (error) {
     console.error('Error checking enrollment:', error);

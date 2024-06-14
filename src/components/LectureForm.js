@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useKeycloak } from '@react-keycloak/web';
 import '../App.css'; // Import the CSS file
 
-const LectureCreationForm = ({courseId}) => {
+const LectureCreationForm = ({courseId, onClose}) => {
   const { keycloak } = useKeycloak();
   const [topic, setTopic] = useState('');
   const [date, setDate] = useState('');
@@ -26,9 +26,7 @@ const LectureCreationForm = ({courseId}) => {
           Authorization: `Bearer ${keycloak.token}`
         }
       });
-  
-      console.log('Lecture created successfully:', lectureResponse.data);
-  
+
       // Get the list of enrolled students for the course
       const studentsResponse = await axios.get(`http://localhost:8000/api/courses/${courseId}/enrolled-users`, {
         headers: {
@@ -39,7 +37,6 @@ const LectureCreationForm = ({courseId}) => {
   
       // Create attendance records for each enrolled student
       const attendancePromises = enrolledStudents.map(async student => {
-        console.log(student);
         await axios.put('http://localhost:8000/api/attendances/create', {
           lectureId: lectureResponse.data.lecture_id,
           studentId: student.userId,
@@ -63,6 +60,12 @@ const LectureCreationForm = ({courseId}) => {
       // Display error message to the professor
       setErrorMessage('Error creating lecture and attendance. Please try again.');
     }
+
+    // Close the form
+    onClose();
+
+    // Refresh the course page to see the new course (assuming it's managed by CoursePage component)
+    window.location.reload();
   };
   
 
