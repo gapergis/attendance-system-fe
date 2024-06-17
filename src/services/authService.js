@@ -1,8 +1,8 @@
-import { useKeycloak } from '@react-keycloak/web';
-import axios from 'axios';
+import { useKeycloak } from "@react-keycloak/web";
+import axios from "axios";
 
 export const useAuth = () => {
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { keycloak } = useKeycloak();
 
   const getToken = () => {
@@ -14,14 +14,13 @@ export const useAuth = () => {
       return null; // You can change this to an appropriate default value
     }
   };
-  
 
   const getUserInfo = async () => {
     if (keycloak.authenticated) {
       return {
         username: keycloak.tokenParsed.preferred_username,
         email: keycloak.tokenParsed.email,
-        role: keycloak.tokenParsed.realm_access.roles[0] // Assuming single role
+        role: keycloak.tokenParsed.realm_access.roles[0], // Assuming single role
       };
     }
     return null;
@@ -32,21 +31,20 @@ export const useAuth = () => {
   const roles = keycloak.tokenParsed?.realm_access?.roles || [];
 
   const isProfessor = () => {
-    return keycloak.hasRealmRole('professor');
+    return keycloak.hasRealmRole("professor");
   };
 
   const isStudent = () => {
-    return keycloak.hasRealmRole('student');
+    return keycloak.hasRealmRole("student");
   };
-
 
   const loadUserProfile = async (keycloak) => {
     if (keycloak && keycloak.authenticated) {
-      let role="";
-      if (isProfessor()){
-        role = "professor"
+      let role = "";
+      if (isProfessor()) {
+        role = "professor";
       } else {
-        role = "student"
+        role = "student";
       }
       try {
         const profile = await keycloak.loadUserProfile();
@@ -55,52 +53,58 @@ export const useAuth = () => {
           surname: profile.lastName || "",
           email: profile.email || "",
           username: profile.username || "",
-          role: role
+          role: role,
         };
       } catch (err) {
-        console.error('Failed to load user profile', err);
+        console.error("Failed to load user profile", err);
         throw err;
       }
     }
     return null;
   };
-  
-  
+
   const addUserToDatabase = async (user) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/add', user);
+      const response = await axios.post(`${apiUrl}/users/add`, user);
       return response.data;
     } catch (error) {
-      console.error('Error adding user to database:', error);
+      console.error("Error adding user to database:", error);
       throw error;
     }
   };
 
   const sendEmail = async (to, subject, body) => {
     try {
-      const url = new URL('http://localhost:8000/api/email/send');
-      url.searchParams.append('to', to);
-      url.searchParams.append('subject', subject);
-      url.searchParams.append('body', body);
-  
+      const url = new URL(`${apiUrl}/email/send`);
+      url.searchParams.append("to", to);
+      url.searchParams.append("subject", subject);
+      url.searchParams.append("body", body);
+
       const response = await fetch(url.toString(), {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
-        console.log('Email sent successfully!');
+        console.log("Email sent successfully!");
       } else {
-        console.error('Failed to send email:', response.statusText);
+        console.error("Failed to send email:", response.statusText);
       }
     } catch (error) {
-      console.error('Failed to send email:', error);
+      console.error("Failed to send email:", error);
     }
   };
-  
- 
 
-  return { isAuthenticated, getToken, getUserInfo, isProfessor, isStudent, addUserToDatabase, loadUserProfile, sendEmail };
+  return {
+    isAuthenticated,
+    getToken,
+    getUserInfo,
+    isProfessor,
+    isStudent,
+    addUserToDatabase,
+    loadUserProfile,
+    sendEmail,
+  };
 };

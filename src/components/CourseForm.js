@@ -1,54 +1,58 @@
 // src/components/CourseCreationForm.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useKeycloak } from '@react-keycloak/web';
-import '../App.css'; // Import the CSS file
+import React, { useState } from "react";
+import axios from "axios";
+import { useKeycloak } from "@react-keycloak/web";
+import "../App.css"; // Import the CSS file
 
 const CourseCreationForm = ({ professorId, onClose }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { keycloak } = useKeycloak();
-  const [courseName, setCourseName] = useState('');
-  const [description, setDescription] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [courseName, setCourseName] = useState("");
+  const [description, setDescription] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/courses', {
-        title: courseName,
-        description: description,
-        professorId: professorId  // Use professorId passed as prop
-      }, {
-        headers: {
-          Authorization: `Bearer ${keycloak.token}`
+      const response = await axios.post(
+        `${apiUrl}/courses`,
+        {
+          title: courseName,
+          description: description,
+          professorId: professorId, // Use professorId passed as prop
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${keycloak.token}`,
+          },
         }
-      });
+      );
 
-      setSuccessMessage('Course created successfully');
-      setErrorMessage('');
-      console.log('Course created successfully:', response.data);
-      
+      setSuccessMessage("Course created successfully");
+      setErrorMessage("");
+      console.log("Course created successfully:", response.data);
+
       // Reset form fields
-      setCourseName('');
-      setDescription('');
+      setCourseName("");
+      setDescription("");
 
       // Close the form
       onClose();
 
       // Refresh the course page to see the new course (assuming it's managed by CoursePage component)
       window.location.reload();
-
     } catch (error) {
-      console.error('Error creating course:', error.message);
-      setErrorMessage('Error creating course. Please try again.');
-      setSuccessMessage('');
+      console.error("Error creating course:", error.message);
+      setErrorMessage("Error creating course. Please try again.");
+      setSuccessMessage("");
     }
   };
 
   return (
     <div className="course-form-container">
-      {keycloak.hasRealmRole('professor') ? (
+      {keycloak.hasRealmRole("professor") ? (
         <form onSubmit={handleSubmit}>
           <label>
             Course Name:
@@ -70,12 +74,12 @@ const CourseCreationForm = ({ professorId, onClose }) => {
           </label>
           <button type="submit">Create Course</button>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
         </form>
       ) : (
-        <div>
-          You are not authorized to access this page.
-        </div>
+        <div>You are not authorized to access this page.</div>
       )}
     </div>
   );
