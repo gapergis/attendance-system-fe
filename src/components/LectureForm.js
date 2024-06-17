@@ -18,7 +18,7 @@ const LectureCreationForm = ({ courseId, onClose }) => {
     try {
       // Create the lecture
       const lectureResponse = await axios.put(
-        `${apiUrl}/lectures/create`,
+        `${apiUrl}lectures/create`,
         {
           topic: topic,
           date: date,
@@ -34,7 +34,7 @@ const LectureCreationForm = ({ courseId, onClose }) => {
 
       // Get the list of enrolled students for the course
       const studentsResponse = await axios.get(
-        `${apiUrl}/courses/${courseId}/enrolled-users`,
+        `${apiUrl}courses/${courseId}/enrolled-users`,
         {
           headers: {
             Authorization: `Bearer ${keycloak.token}`,
@@ -46,7 +46,7 @@ const LectureCreationForm = ({ courseId, onClose }) => {
       // Create attendance records for each enrolled student
       const attendancePromises = enrolledStudents.map(async (student) => {
         await axios.put(
-          `${apiUrl}/attendances/create`,
+          `${apiUrl}attendances/create`,
           {
             lectureId: lectureResponse.data.lecture_id,
             studentId: student.userId,

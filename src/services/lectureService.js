@@ -4,7 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const getLectures = async () => {
   try {
-    const response = await axios.get(`${apiUrl}/lectures/`);
+    const response = await axios.get(`${apiUrl}lectures/`);
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch lectures: " + error.message);
@@ -13,7 +13,7 @@ export const getLectures = async () => {
 
 export const getLecturesByCourseId = async (courseId) => {
   try {
-    const response = await axios.get(`${apiUrl}/lectures/course/${courseId}/`);
+    const response = await axios.get(`${apiUrl}lectures/course/${courseId}/`);
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch lectures: " + error.message);
@@ -22,7 +22,7 @@ export const getLecturesByCourseId = async (courseId) => {
 
 export const getLectureDetails = async (lectureId) => {
   try {
-    const response = await axios.get(`${apiUrl}/lectures/lecture/${lectureId}`);
+    const response = await axios.get(`${apiUrl}lectures/lecture/${lectureId}`);
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch lecture details: " + error.message);
@@ -32,7 +32,7 @@ export const getLectureDetails = async (lectureId) => {
 export const getEnrolledStudents = async (lectureId) => {
   try {
     const response = await axios.get(
-      `${apiUrl}/lectures/${lectureId}/enrolled-users`
+      `${apiUrl}lectures/${lectureId}/enrolled-users`
     );
     return response.data;
   } catch (error) {
@@ -46,7 +46,7 @@ export const getAttendanceByLectureAndStudent = async (
 ) => {
   try {
     const response = await axios.get(
-      `${apiUrl}/attendances/lecture/${lectureId}/student/${studentId}`
+      `${apiUrl}attendances/lecture/${lectureId}/student/${studentId}`
     );
     return response.data;
   } catch (error) {

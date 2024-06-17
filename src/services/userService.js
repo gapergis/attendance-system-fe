@@ -4,7 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const getUserDetailsByUsername = async (username) => {
   try {
-    const response = await axios.get(`${apiUrl}/users/byUsername/${username}`);
+    const response = await axios.get(`${apiUrl}users/byUsername/${username}`);
     return response.data;
   } catch (error) {
     console.error("Failed to update attendance status:", error);
@@ -14,7 +14,7 @@ export const getUserDetailsByUsername = async (username) => {
 
 export const getUserDetailsById = async (userId) => {
   try {
-    const response = await axios.get(`${apiUrl}/users/byId/${userId}`);
+    const response = await axios.get(`${apiUrl}users/byId/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to update attendance status:", error);
@@ -28,7 +28,7 @@ export const updateAttendanceConfirmation = async (
 ) => {
   try {
     const response = await axios.put(
-      `${apiUrl}/attendances/${attendanceId}/toggle`
+      `${apiUrl}attendances/${attendanceId}/toggle`
     );
     return response.data;
   } catch (error) {
@@ -39,7 +39,7 @@ export const updateAttendanceConfirmation = async (
 export const updateAttendanceStatus = async (attendanceId, newStatus) => {
   try {
     const response = await axios.put(
-      `${apiUrl}/attendances/${attendanceId}/${newStatus}`
+      `${apiUrl}attendances/${attendanceId}/${newStatus}`
     );
     return response.data;
   } catch (error) {
@@ -51,7 +51,7 @@ export const updateAttendanceStatus = async (attendanceId, newStatus) => {
 export const checkUserEnrollment = async (courseId, studentId) => {
   try {
     const response = await axios.get(
-      `${apiUrl}/enrollments/check?courseId=${courseId}&userId=${studentId}`
+      `${apiUrl}enrollments/check?courseId=${courseId}&userId=${studentId}`
     );
     return response.data; // Assuming the API directly returns the boolean
   } catch (error) {
@@ -62,7 +62,7 @@ export const checkUserEnrollment = async (courseId, studentId) => {
 
 export const enrollUserInCourse = async (courseId, studentId) => {
   try {
-    const response = await axios.post(`${apiUrl}/enrollments/enroll`, {
+    const response = await axios.post(`${apiUrl}enrollments/enroll`, {
       courseId,
       userId: studentId,
     });
@@ -76,7 +76,7 @@ export const enrollUserInCourse = async (courseId, studentId) => {
 export const createAttendances = async (courseId, studentId) => {
   try {
     const response = await axios.post(
-      `${apiUrl}/enrollments/createAttendances`,
+      `${apiUrl}enrollments/createAttendances`,
       { courseId, userId: studentId }
     );
     return response.data;

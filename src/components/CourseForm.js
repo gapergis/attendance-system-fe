@@ -17,7 +17,7 @@ const CourseCreationForm = ({ professorId, onClose }) => {
 
     try {
       const response = await axios.post(
-        `${apiUrl}/courses`,
+        `${apiUrl}courses`,
         {
           title: courseName,
           description: description,

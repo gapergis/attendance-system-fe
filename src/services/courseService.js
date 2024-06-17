@@ -4,7 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const getCoursesForStudent = async (token, studentId) => {
   try {
-    const response = await axios.get(`${apiUrl}/courses/`, {
+    const response = await axios.get(`${apiUrl}courses/`, {
       params: {
         studentId: studentId, // Pass the student's ID or username to the server
       },
@@ -22,7 +22,7 @@ export const getCoursesForStudent = async (token, studentId) => {
 
 export const getCourses = async (token) => {
   try {
-    const response = await axios.get(API_URL, {
+    const response = await axios.get(`${apiUrl}courses`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -35,7 +35,7 @@ export const getCourses = async (token) => {
 
 export const getCoursesById = async (token, courseId) => {
   try {
-    const response = await axios.get(`${API_URL}${courseId}`, {
+    const response = await axios.get(`${apiUrl}${courseId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
