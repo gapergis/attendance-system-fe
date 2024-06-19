@@ -65,7 +65,7 @@ export const useAuth = () => {
 
   const addUserToDatabase = async (user) => {
     try {
-      const response = await axios.post(`${apiUrl}users/add`, user);
+      const response = await axios.post(`${apiUrl}/users/add`, user);
       return response.data;
     } catch (error) {
       console.error("Error adding user to database:", error);
@@ -75,7 +75,7 @@ export const useAuth = () => {
 
   const sendEmail = async (to, subject, body) => {
     try {
-      const url = new URL(`${apiUrl}email/send`);
+      const url = new URL(`${apiUrl}/email/send`);
       url.searchParams.append("to", to);
       url.searchParams.append("subject", subject);
       url.searchParams.append("body", body);
