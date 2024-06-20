@@ -1,8 +1,7 @@
-// src/components/LectureCreationForm.js
 import React, { useState } from "react";
 import axios from "axios";
 import { useKeycloak } from "@react-keycloak/web";
-import "../App.css"; // Import the CSS file
+import "../App.css";
 
 const LectureCreationForm = ({ courseId, onClose }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,25 +13,22 @@ const LectureCreationForm = ({ courseId, onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Form submitted");
 
     try {
-      // Create the lecture
-      const lectureResponse = await axios.put(
+      console.log("Sending lecture creation request");
+      const lectureResponse = await axios.post(
         `${apiUrl}/lectures/add`,
         {
           topic: topic,
           date: date,
           time: time,
           course: courseId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${keycloak.token}`,
-          },
         }
       );
+      console.log("Lecture created:", lectureResponse.data);
 
-      // Get the list of enrolled students for the course
+      console.log("Fetching enrolled students");
       const studentsResponse = await axios.get(
         `${apiUrl}/courses/${courseId}/enrolled-users`,
         {
@@ -42,16 +38,16 @@ const LectureCreationForm = ({ courseId, onClose }) => {
         }
       );
       const enrolledStudents = studentsResponse.data;
+      console.log("Enrolled students:", enrolledStudents);
 
-      // Create attendance records for each enrolled student
       const attendancePromises = enrolledStudents.map(async (student) => {
-        await axios.put(
-          `${apiUrl}attendances/create`,
+        await axios.post( 
+          `${apiUrl}/attendances/add`,
           {
             lectureId: lectureResponse.data.lecture_id,
             studentId: student.userId,
             status: "N/A",
-            confirmation: "unconfirmed", // Set default status as absent
+            confirmation: "unconfirmed",
           },
           {
             headers: {
@@ -61,27 +57,16 @@ const LectureCreationForm = ({ courseId, onClose }) => {
         );
       });
 
-      // Wait for all attendance creation requests to complete
       await Promise.all(attendancePromises);
+      console.log("Attendance records created successfully");
 
-      console.log(
-        "Attendance records created successfully for all enrolled students."
-      );
-
-      // Provide feedback to the professor about the success of lecture and attendance creation
     } catch (error) {
       console.error("Error creating lecture and attendance:", error.message);
-      // Display error message to the professor
-      setErrorMessage(
-        "Error creating lecture and attendance. Please try again."
-      );
+      setErrorMessage("Error creating lecture and attendance. Please try again.");
     }
 
-    // Close the form
-    onClose();
-
-    // Refresh the course page to see the new course (assuming it's managed by CoursePage component)
-    window.location.reload();
+    // onClose();
+    // window.location.reload();
   };
 
   return (

@@ -16,18 +16,13 @@ const CourseCreationForm = ({ professorId, onClose }) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${apiUrl}/courses/add`,
         {
           title: courseName,
           description: description,
           professorId: professorId, // Use professorId passed as prop
         },
-        {
-          headers: {
-            Authorization: `Bearer ${keycloak.token}`,
-          },
-        }
       );
 
       setSuccessMessage("Course created successfully");

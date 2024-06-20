@@ -22,7 +22,9 @@ const App = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      if (keycloak && keycloak.authenticated) { 
+      console.log("checking user , keycloak: "+ keycloak.data + ", authenticated?: "+ keycloak.authenticated);
+      
+      if (keycloak) {  
         try {
           const profile = await loadUserProfile(keycloak);
           setUser(profile);
@@ -32,12 +34,16 @@ const App = () => {
         } catch (err) {
           console.error('Error during Keycloak initialization:', err);
         }
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     checkUser();
   }, [keycloak]);
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
 
   return (
     <>
