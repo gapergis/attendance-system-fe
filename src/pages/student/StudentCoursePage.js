@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getCoursesForStudent } from '../../services/courseService';
+import { getCourses } from '../../services/courseService';
 import { useAuth } from '../../services/authService';
 import { getUserDetailsByUsername } from '../../services/userService';
 import { useKeycloak } from '@react-keycloak/web';
@@ -38,7 +38,7 @@ const CoursePage = () => {
       if (!user) return;
       try {
         setLoadingCourses(true);
-        const coursesData = await getCoursesForStudent(token, user.userId);
+        const coursesData = await getCourses(token);
         setCourses(coursesData);
       } catch (error) {
         console.error('Error fetching courses:', error);

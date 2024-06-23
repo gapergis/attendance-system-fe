@@ -1,22 +1,13 @@
-// src/keycloak.js
-import Keycloak from "keycloak-js";
-const keycloakUrl = process.env.REACT_APP_KEYCLOAK_URL;
+import Keycloak from 'keycloak-js';
 
-const keycloak = new Keycloak({
-  url: `${keycloakUrl}/`,
-  realm: "attendance-system-realm",
-  clientId: "attendance-system-client",
-  credentials: {
-    secret: "mMz28CATjuVxKjbzlXuSDBwiBJOj2zOn",
-  },
-});
+const kcUrl = process.env.REACT_APP_KEYCLOAK_URL;
 
-export const keycloakConfig = {
-  onLoad: "login-required",
-  checkLoginIframe: false,
-  enableLogging: true,
-  // Optional: Skip third-party cookies check
-  pkceMethod: "S256",
+const keycloakConfig = {
+    url: kcUrl,
+    realm: 'attendance-system-realm',
+    clientId: 'attendance-system-client',
 };
+
+const keycloak = new Keycloak(keycloakConfig);
 
 export default keycloak;

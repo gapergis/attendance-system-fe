@@ -65,8 +65,8 @@ const LectureCreationForm = ({ courseId, onClose }) => {
       setErrorMessage("Error creating lecture and attendance. Please try again.");
     }
 
-    // onClose();
-    // window.location.reload();
+     onClose();
+     window.location.reload();
   };
 
   return (

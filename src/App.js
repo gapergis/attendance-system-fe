@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
@@ -12,19 +12,17 @@ import StudentCoursePage from './pages/student/StudentCoursePage';
 import StudentCourseLecturesPage from './pages/student/StudentCourseLecturesPage';
 import StudentLectureDetailsPage from './pages/student/StudentLectureDetailsPage';
 import StudentLecturePage from './pages/student/StudentLecturePage';
-import {useAuth} from './services/authService';
+import { useAuth } from './services/authService';
 
 const App = () => {
-  const {addUserToDatabase, loadUserProfile} = useAuth();
+  const { addUserToDatabase, loadUserProfile } = useAuth();
   const { keycloak } = useKeycloak();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkUser = async () => {
-      console.log("checking user , keycloak: "+ keycloak.data + ", authenticated?: "+ keycloak.authenticated);
-      
-      if (keycloak) {  
+      if (keycloak.authenticated) {
         try {
           const profile = await loadUserProfile(keycloak);
           setUser(profile);
@@ -34,15 +32,15 @@ const App = () => {
         } catch (err) {
           console.error('Error during Keycloak initialization:', err);
         }
-        setLoading(false);
       }
+      setLoading(false);
     };
 
     checkUser();
   }, [keycloak]);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -52,14 +50,16 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute allowedRoles={['professor']} />}>
-            <Route path="/" element={<Navigate to= "/professor/courses"/>} /> 
+            <Route path="" element={<Navigate to="/professor/courses" />} />
+            <Route path="/" element={<Navigate to="/professor/courses" />} />
             <Route path="/professor/courses" element={<ProfessorCoursePage />} />
             <Route path="/professor/courses/lectures/:courseId" element={<ProfessorCourseLecturesPage />} />
             <Route path="/professor/courses/lectures/lecture/:lectureId" element={<ProfessorLectureDetailsPage />} />
             <Route path="/professor/lectures" element={<ProfessorLecturePage />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-            <Route path="/" element={<Navigate to= "/student/courses"/>} /> 
+            <Route path="" element={<Navigate to="/student/courses" />} />
+            <Route path="/" element={<Navigate to="/student/courses" />} />
             <Route path="/student/courses" element={<StudentCoursePage />} />
             <Route path="/student/courses/lectures/:courseId" element={<StudentCourseLecturesPage />} />
             <Route path="/student/courses/lectures/lecture/:lectureId" element={<StudentLectureDetailsPage />} />

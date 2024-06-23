@@ -1,27 +1,22 @@
-// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
-import App from './App';
 import keycloak from './components/Keycloak';
+import App from './App';
 
-const eventLogger = (event, error) => {
-  if (event === 'onAuthSuccess' || event === 'onReady') {
-   // console.log('Keycloak is ready');
-  }
+const initOptions = {
+  onLoad: 'login-required',
 };
 
-const tokenLogger = (tokens) => {
-  // console.log('onKeycloakTokens', tokens);
+const keycloakProviderInitConfig = {
+  onTokens: (tokens) => {
+    localStorage.setItem('kcToken', tokens.token);
+    localStorage.setItem('kcRefreshToken', tokens.refreshToken);
+  },
 };
 
 ReactDOM.render(
-  <ReactKeycloakProvider
-    authClient={keycloak}
-    initOptions={{ onLoad: 'login-required' }}
-    onEvent={eventLogger}
-    onTokens={tokenLogger}
-  >
+  <ReactKeycloakProvider authClient={keycloak} initOptions={initOptions} {...keycloakProviderInitConfig}>
     <App />
   </ReactKeycloakProvider>,
   document.getElementById('root')
